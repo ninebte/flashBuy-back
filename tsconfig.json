@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+	  "strict": true,
+	  "moduleDetection": "force",
+	  "module": "CommonJS",
+	  "target": "ESNext",
+	  "allowJs": true,
+	  "esModuleInterop": true,
+	  "isolatedModules": true,
+	  "emitDecoratorMetadata": true,
+	  "experimentalDecorators": true,
+	  "moduleResolution": "node"
+	},
+	"include": ["src/**/*.ts"],
+	"exclude": ["node_modules", "dist"]
+}
