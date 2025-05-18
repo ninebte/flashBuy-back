@@ -1,12 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryColumn, Column, OneToMany } from "typeorm";
 
 import { CarritoProducto } from "./carritoproducto";
 
+
 @Entity()
 export class Producto {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn("varchar", { length: 50 })
   codigo!: string;
-
+  
 
   @Column("text")
   descripcion!: string;

@@ -15,10 +15,10 @@ async function getProductoById(req: Request, res: Response) {
     );
 
     if (!producto) {
-      throw new Error("Cliente no encontrado");
+      throw new Error("Producto no encontrado");
     }
 
-    res.status(200).json(producto);
+    res.status(200).json({data:producto,status:200});
   } catch (error) {
     console.error("Error al obtener producto:", error);
     res.status(500).json({ error: "Error al obtener producto" });

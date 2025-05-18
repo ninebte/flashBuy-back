@@ -7,6 +7,7 @@ async function crearCliente(req: Request, res: Response) {
 
   const clienteRepository = AppDataSource.getRepository(Cliente);
   const { nombre, email, contrasena, apellido } = req.body;
+  console.log("Datos del cliente:", req.body);
   const clienteData= {
     nombre,apellido,email,contrasena,fecha_registro: new Date()
   }
@@ -39,7 +40,7 @@ async function crearCliente(req: Request, res: Response) {
     
     // 5. Retornar el cliente creado (sin el hash de contraseña por seguridad)
     const { contraseña: _, ...clienteSinPassword } = clienteCreado;
-    res.status(201).json(clienteSinPassword);
+    res.status(201).json({data:clienteSinPassword,status:200});
     
   } catch (error) {
     console.error("Error al crear cliente:", error);
