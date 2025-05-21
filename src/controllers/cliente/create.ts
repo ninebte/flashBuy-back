@@ -1,10 +1,11 @@
 import AppDataSource from "../../../config/db";
 import { Cliente } from "../../entity/cliente";
+import { Carrito } from "../../entity/carrito";
 import { Request, Response } from "express";
 import * as bcrypt from "bcrypt"; // Para el hash de contraseñas
 
 async function crearCliente(req: Request, res: Response) {
-
+  const carritoRepository = AppDataSource.getRepository(Carrito);
   const clienteRepository = AppDataSource.getRepository(Cliente);
   const { nombre, email, contrasena, apellido } = req.body;
   console.log("Datos del cliente:", req.body);
@@ -37,6 +38,20 @@ async function crearCliente(req: Request, res: Response) {
 
     // 4. Guardar en la base de datos
     const clienteCreado = await clienteRepository.save(nuevoCliente);
+
+    // 5. Crear un carrito vacío para el nuevo cliente
+    const {id:cliente_id} = clienteCreado;
+    const carritoData= {
+      cliente_id,activo:true,fecha_creacion: new Date()
+    }
+
+    const nuevoCarrito = new Carrito();
+    nuevoCarrito.cliente_id = carritoData.cliente_id;
+    nuevoCarrito.activo = carritoData.activo;
+    nuevoCarrito.fecha_creacion = carritoData.fecha_creacion;
+
+    await carritoRepository.save(nuevoCarrito);
+
     
     // 5. Retornar el cliente creado (sin el hash de contraseña por seguridad)
     const { contraseña: _, ...clienteSinPassword } = clienteCreado;

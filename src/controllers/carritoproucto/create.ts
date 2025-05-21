@@ -1,5 +1,6 @@
 import AppDataSource from "../../../config/db";
 import { CarritoProducto } from "../../entity/carritoproducto";
+import { Carrito } from "../../entity/carrito";
 import { Request, Response } from "express";
 import * as bcrypt from "bcrypt";
 
@@ -11,6 +12,20 @@ async function crearCarritoProducto(req: Request, res: Response) {
   }
   
   try {
+    
+
+    // 2. Validar que el producto existe
+    const producto = await carritoProductoRepository.findOne({
+      where: { producto_codigo },
+      relations: ["producto"]
+    });
+
+    if (!producto) {
+      res.status(404).json({ error: "No existe producto" });
+      return;
+    }
+
+    
 
     // 3. Crear nueva instancia del cliente
     const nuevocorritoProducto = new CarritoProducto();
