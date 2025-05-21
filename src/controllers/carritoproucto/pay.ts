@@ -28,6 +28,10 @@ async function payCarritoProducto(req: Request, res: Response) {
         precioTotal += producto.producto.precio * producto.cantidad;
     }
 
+    //Generar el codigo de QR para el carrito
+    //Vaciar el carrito de productos
+    //Enviar respuestas 
+
   } catch (error) {
     console.error("Error al obtener cp:", error);
     res.status(500).json({ error: "Error al obtener cp" });
